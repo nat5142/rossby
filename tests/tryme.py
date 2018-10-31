@@ -25,4 +25,7 @@ def test_station_query():
 
 
 def test_latest_observation():
-	pass
+	"""Query the stations/{station_id}/observations/latest endpoint for KUNV"""
+	test_against = ['@context', 'id', 'type', 'geometry', 'properties']
+	ross = Rossby()
+	assert ross.stations.get('KUNV').observations.latest.keys() == test_against
