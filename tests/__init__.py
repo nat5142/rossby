@@ -1,1 +1,1 @@
-from .tryme import *
+from .endpoints.stations import TestStationsEndpoint
