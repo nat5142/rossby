@@ -11,4 +11,3 @@ class Stations(BaseEndpoint):
 
     def get_all(self):
         pass
-
