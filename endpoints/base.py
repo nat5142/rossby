@@ -5,7 +5,7 @@ class BaseEndpoint(object):
 	def __init__(self):
 		pass
 
-	def get(self, url, params={}, response_cls=None):
+	def get(self, url, params={}):
 		if not url:
 			# query the default endpoint (i.e. /stations)
 			pass

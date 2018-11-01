@@ -10,3 +10,6 @@ class Rossby(object):
         self.glossary = endpoints.Glossary()
 
         self.connected = False
+
+    def stations(self, station_id):
+        obj = endpoints.Stations(station_id)
