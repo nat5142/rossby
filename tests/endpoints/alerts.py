@@ -1,14 +1,7 @@
-from models.rossby import Rossby
-import unittest
+from ..base_test import BaseTestClass
 
 
-class TestAlertsEndpoint(unittest.TestCase):
-
-    def setUp(self):
-        self.rossby = Rossby()
-
-    def tearDown(self):
-        pass
+class TestAlertsEndpoint(BaseTestClass):
 
     def test_base_alerts(self):
         params = {}
