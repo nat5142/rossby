@@ -1,5 +1,5 @@
 import json
-from ..base_test import BaseTestClass
+from tests.base_test import BaseTestClass
 
 
 class TestGlossaryEndpoint(BaseTestClass):
