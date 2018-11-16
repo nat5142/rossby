@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dwml version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://graphical.weather.gov/xml/DWMLgen/schema/DWML.xsd">
+ <head>
+  <product concise-name="dwmlByDay" operational-mode="developmental" srsName="WGS 1984">
+   <creation-date refresh-frequency="PT1H">2018-11-16T12:21:39+00:00</creation-date>
+   <category>current observations and forecast</category>
+  </product>
+  <source>
+   <production-center>New York, NY</production-center>
+   <credit>https://www.weather.gov/okx</credit>
+   <more-information>http://www.nws.noaa.gov/forecasts/xml/</more-information>
+  </source>
+ </head>
+ <data type="forecast">
+  <location>
+   <location-key>point1</location-key>
+   <point latitude="39.9894623" longitude="-72.9964572"/>
+   <area-description>46 mi SSE Saltaire NY</area-description>
+   <height datum="mean sea level" height-units="feet">0</height>
+  </location>
+  <moreWeatherInformation applicable-location="point1">https://forecast.weather.gov/point/39.9894623,-72.9964572</moreWeatherInformation>
+  <time-layout time-coordinate="local" summarization="12hourly">
+   <layout-key>k-p12h-n14-1</layout-key>
+   <start-valid-time period-name="This Afternoon">2018-11-16T15:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Tonight">2018-11-16T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Saturday">2018-11-17T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Saturday Night">2018-11-17T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Sunday">2018-11-18T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Sunday Night">2018-11-18T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Monday">2018-11-19T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Monday Night">2018-11-19T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Tuesday">2018-11-20T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Tuesday Night">2018-11-20T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Wednesday">2018-11-21T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Wednesday Night">2018-11-21T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Thanksgiving Day">2018-11-22T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Thursday Night">2018-11-22T18:00:00+00:00</start-valid-time>
+  </time-layout>
+  <time-layout time-coordinate="local" summarization="12hourly">
+   <layout-key>k-p24h-n7-1</layout-key>
+   <start-valid-time period-name="This Afternoon">2018-11-16T15:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Saturday">2018-11-17T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Sunday">2018-11-18T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Monday">2018-11-19T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Tuesday">2018-11-20T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Wednesday">2018-11-21T06:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Thanksgiving Day">2018-11-22T06:00:00+00:00</start-valid-time>
+  </time-layout>
+  <time-layout time-coordinate="local" summarization="12hourly">
+   <layout-key>k-p24h-n7-2</layout-key>
+   <start-valid-time period-name="Tonight">2018-11-16T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Saturday Night">2018-11-17T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Sunday Night">2018-11-18T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Monday Night">2018-11-19T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Tuesday Night">2018-11-20T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Wednesday Night">2018-11-21T18:00:00+00:00</start-valid-time>
+   <start-valid-time period-name="Thursday Night">2018-11-22T18:00:00+00:00</start-valid-time>
+  </time-layout>
+  <parameters applicable-location="point1">
+   <temperature type="maximum" units="Fahrenheit" time-layout="k-p24h-n7-1">
+    <name>Daily Maximum Temperature</name>
+    <value>52</value>
+    <value>49</value>
+    <value>49</value>
+    <value>51</value>
+    <value>47</value>
+    <value>39</value>
+    <value>47</value>
+   </temperature>
+   <temperature type="minimum" units="Fahrenheit" time-layout="k-p24h-n7-2">
+    <name>Daily Minimum Temperature</name>
+    <value>44</value>
+    <value>46</value>
+    <value>47</value>
+    <value>42</value>
+    <value>36</value>
+    <value>36</value>
+    <value>46</value>
+   </temperature>
+   <probability-of-precipitation type="12 hour" units="percent" time-layout="k-p12h-n14-1">
+    <name>12 Hourly Probability of Precipitation</name>
+    <value>20</value>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+    <value xsi:nil="true"/>
+   </probability-of-precipitation>
+   <weather time-layout="k-p12h-n14-1">
+    <name>Weather Type, Coverage, Intensity</name>
+    <weather-conditions weather-summary="Slight Chance Rain"/>
+    <weather-conditions weather-summary="Partly Cloudy"/>
+    <weather-conditions weather-summary="Sunny"/>
+    <weather-conditions weather-summary="Partly Cloudy"/>
+    <weather-conditions weather-summary="Mostly Sunny"/>
+    <weather-conditions weather-summary="Mostly Cloudy then Slight Chance Rain Showers"/>
+    <weather-conditions weather-summary="Slight Chance Rain Showers"/>
+    <weather-conditions weather-summary="Slight Chance Rain Showers then Partly Cloudy"/>
+    <weather-conditions weather-summary="Mostly Sunny"/>
+    <weather-conditions weather-summary="Mostly Cloudy"/>
+    <weather-conditions weather-summary="Mostly Sunny"/>
+    <weather-conditions weather-summary="Mostly Clear"/>
+    <weather-conditions weather-summary="Mostly Sunny"/>
+    <weather-conditions weather-summary="Partly Cloudy"/>
+   </weather>
+   <conditions-icon type="forecast-NWS" time-layout="k-p12h-n14-1">
+    <name>Conditions Icon</name>
+    <icon-link>https://api.weather.gov/icons/land/day/rain,20?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/wind_sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/wind_few?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/bkn/rain_showers?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/rain_showers?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/rain_showers/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/bkn?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/few?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/day/sct?size=medium</icon-link>
+    <icon-link>https://api.weather.gov/icons/land/night/sct?size=medium</icon-link>
+   </conditions-icon>
+   <wordedForecast time-layout="k-p12h-n14-1" dataSource="okxNetcdf" wordGenerator="noaa.nws.nids.BaselineForecastGenerator">
+    <name>Text Forecast</name>
+    <text>A slight chance of rain before 4pm. Mostly sunny. High near 52, with temperatures falling to around 47 in the afternoon. West wind 33 to 40 mph, with gusts as high as 51 mph. Chance of precipitation is 20%.</text>
+    <text>Partly cloudy, with a low around 44. West wind 29 to 32 mph.</text>
+    <text>Sunny, with a high near 49. Northwest wind 16 to 28 mph.</text>
+    <text>Partly cloudy, with a low around 46. Northwest wind 12 to 15 mph.</text>
+    <text>Mostly sunny, with a high near 49. Northwest wind 6 to 12 mph.</text>
+    <text>A slight chance of rain showers after 5am. Mostly cloudy, with a low around 47.</text>
+    <text>A slight chance of rain showers. Cloudy, with a high near 51.</text>
+    <text>A slight chance of rain showers before 7pm. Partly cloudy, with a low around 42.</text>
+    <text>Mostly sunny, with a high near 47.</text>
+    <text>Mostly cloudy, with a low around 36.</text>
+    <text>Mostly sunny, with a high near 39.</text>
+    <text>Mostly clear, with a low around 36.</text>
+    <text>Mostly sunny, with a high near 47.</text>
+    <text>Partly cloudy, with a low around 46.</text>
+   </wordedForecast>
+  </parameters>
+ </data>
+ <data type="current observations">
+  <location>
+   <location-key>point1</location-key>
+   <point latitude="40.79389" longitude="-73.10167"/>
+   <area-description>Islip, Long Island Mac Arthur Airport, NY</area-description>
+   <height datum="mean sea level" height-units="feet">98</height>
+  </location>
+  <moreWeatherInformation applicable-location="point1">https://forecast.weather.gov/obs/KISP/history</moreWeatherInformation>
+  <time-layout time-coordinate="local">
+   <layout-key>k-p1h-n1-1</layout-key>
+   <start-valid-time period-name="current">2018-11-16T13:56:00+00:00</start-valid-time>
+  </time-layout>
+  <parameters applicable-location="point1">
+   <temperature type="apparent" units="Fahrenheit" time-layout="k-p1h-n1-1">
+    <value>38</value>
+   </temperature>
+   <temperature type="dew point" units="Fahrenheit" time-layout="k-p1h-n1-1">
+    <value>35</value>
+   </temperature>
+   <humidity type="relative" time-layout="k-p1h-n1-1">
+    <value>89</value>
+   </humidity>
+   <weather time-layout="k-p1h-n1-1">
+    <name>Weather Type, Coverage, Intensity</name>
+    <weather-conditions weather-summary="Light Rain and Fog/Mist"/>
+    <weather-conditions>
+     <value>
+      <visibility units="statute miles">1</visibility>
+     </value>
+    </weather-conditions>
+   </weather>
+   <conditions-icon type="forecast-NWS" time-layout="k-p1h-n1-1">
+    <name>Conditions Icon</name>
+    <icon-link>https://api.weather.gov/icons/land/day/rain?size=medium</icon-link>
+   </conditions-icon>
+   <direction type="wind" units="degrees true" time-layout="k-p1h-n1-1">
+    <value>0</value>
+   </direction>
+   <wind-speed type="gust" units="knots" time-layout="k-p1h-n1-1">
+    <value>38</value>
+   </wind-speed>
+   <wind-speed type="sustained" units="knots" time-layout="k-p1h-n1-1">
+    <value>0</value>
+   </wind-speed>
+   <pressure type="barometer" units="inches of mercury" time-layout="k-p1h-n1-1">
+    <value>29.49</value>
+   </pressure>
+  </parameters>
+ </data>
+</dwml>
