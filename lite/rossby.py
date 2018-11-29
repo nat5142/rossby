@@ -47,7 +47,12 @@ class RossbyAPIMeta(type):
         def request_url(self, url, config, **kwargs):
             response = self.session.request(config.method, url, **kwargs)
             response.raise_for_status()
-            return response.json()
+            for key, value in response.json().items():
+                if key not in dir(response):
+                    setattr(response, key, value)
+                else:
+                    setattr(response, f"{key}_", value)
+            return response
 
         yield 'request', request
         yield 'request_url', request_url

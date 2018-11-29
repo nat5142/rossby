@@ -21,4 +21,4 @@ class ResultSet(object):
 
     @property
     def next_page(self):
-        return self.result['response'].get('next_page')
+        return self.result['pagination']['next']
