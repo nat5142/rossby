@@ -1,13 +1,14 @@
 import unittest
-from models.rossby import Rossby
+from rossby import Rossby
 import requests
 
 
 class BaseTestClass(unittest.TestCase):
     rossby = Rossby()
 
-    def plain_request(self, extension, params={}):
+    @staticmethod
+    def plain_request(endpoint, params):
         session = requests.Session()
-        resp = session.get(self.rossby.base_url + extension, params=params)
+        resp = session.get(f"https://api.weather.gov/{endpoint}", params=params)
 
         return resp.json()

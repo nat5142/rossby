@@ -1,11 +1,12 @@
 from tests.base_test import BaseTestClass
+from requests.exceptions import HTTPError
 
 
 class TestStationsEndpoint(BaseTestClass):
 
     def test_base_endpoint(self):
         """Test base /stations endpoint"""
-        assert len(self.rossby.stations.get_all().features) == 2784
+        assert len(self.rossby.stations.get_all().features) == 2478
 
     def test_get_station_by_id(self):
         """Query the /stations/{station_id} endpoint, test coordinates are accurate for KUNV
@@ -20,15 +21,15 @@ class TestStationsEndpoint(BaseTestClass):
             ]
         }
 
-        station_by_id = self.rossby.stations.get_by_id('KUNV')
+        station_by_id = self.rossby.stations.by_id(station_id='KUNV')
 
         assert station_by_id.geometry == test_against
 
-    def test_get_station_observation(self):
+    def test_get_station_observations(self):
         params = {}
         test_against = self.plain_request('stations/KUNV/observations/', params=params).get('features')[0]['id']
 
-        content = self.rossby.stations.get_observations('KUNV').features[0]['id']
+        content = self.rossby.stations.observations(station_id='KUNV').features[0]['id']
 
         assert content == test_against
 
@@ -36,25 +37,18 @@ class TestStationsEndpoint(BaseTestClass):
         params = {}
         test_against = self.plain_request('stations/KUNV/observations/latest', params=params).get('properties')['@id']
 
-        content = self.rossby.stations.get_latest('KUNV').properties['id']
+        content = self.rossby.stations.latest_observation(station_id='KUNV').properties['@id']
 
         assert content == test_against
 
-    def test_station_id_observation(self):
-        """Test the /stations/{station_id}/observations endpoint"""
+    def test_get_radar(self):
         params = {}
-        test_against = None
+        try:
+            test_against = self.plain_request('stations/radar', params=params)
+            content = self.rossby.stations.radar().json()
+        except HTTPError as err:
+            if err.response.status_code != '500':
+                raise err
 
-        assert self.rossby.get('stations/KUNV/observations', params=params) == test_against
-        assert self.rossby.stations('KUNV').observations().get(params=params) == test_against
+        assert content == test_against
 
-    def test_station_id_latest_observation(self):
-        """Test the /stations/{station_id}/observations/latest endpoint"""
-        params = {}
-        test_against = None
-
-        assert self.rossby.stations('KUNV').observations().latest().get(params=params) == test_against
-
-    def test_query_latest_for_all_stations_in_pennsylvania(self):
-        pa_stations = self.rossby.stations(id='PA')
-        pass

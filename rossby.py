@@ -2,8 +2,8 @@ import requests
 from collections import namedtuple
 from string import Formatter
 from urllib.parse import urljoin
-from .api_config import api_endpoints
-from .resultset import ResultSet
+from api_config import api_endpoints
+from resultset import ResultSet
 
 
 class RossbyAPIMeta(type):
