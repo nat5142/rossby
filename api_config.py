@@ -56,7 +56,7 @@ api_endpoints = {
     'offices': {
         'by_id': GETEndpoint('offices/{office_id}', response=['ld+json']),
         'headline_by_id': GETEndpoint('offices/{office_id}/headlines/{headline_id}', response=['ld+json']),
-        'headlines': GETEndpoint('offices/office_id}/headlines', response=['ld+json'])
+        'headlines': GETEndpoint('offices/{office_id}/headlines', response=['ld+json'])
     },
     'points': {
         'get_point': GETEndpoint('points/{point}', response=['geo+json', 'ld+json']),

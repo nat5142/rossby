@@ -3,7 +3,7 @@ from collections import namedtuple
 from string import Formatter
 from urllib.parse import urljoin
 from api_config import api_endpoints
-from resultset import ResultSet
+from default_response import DefaultResponse
 
 
 class RossbyAPIMeta(type):
@@ -42,16 +42,11 @@ class RossbyAPIMeta(type):
                     kwargs['key'] = ','.join(str(v) for v in value)
             params = {'params' if config.method == 'get' else 'data': kwargs}
             result = self.request_url(url, config, **params)
-            return ResultSet(self, config, result) if config.paginated else result
+            return DefaultResponse(self, config, result)
 
         def request_url(self, url, config, **kwargs):
             response = self.session.request(config.method, url, **kwargs)
             response.raise_for_status()
-            for key, value in response.json().items():
-                if key not in dir(response):
-                    setattr(response, key, value)
-                else:
-                    setattr(response, f"{key}_", value)
             return response
 
         yield 'request', request
