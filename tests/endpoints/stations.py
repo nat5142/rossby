@@ -9,10 +9,6 @@ class TestStationsEndpoint(BaseTestClass):
         assert len(self.rossby.stations.get_all().features) == 2478
 
     def test_get_station_by_id(self):
-        """Query the /stations/{station_id} endpoint, test coordinates are accurate for KUNV
-
-        :return: none
-        """
         test_against = {
             "type": "Point",
             "coordinates": [
@@ -23,21 +19,21 @@ class TestStationsEndpoint(BaseTestClass):
 
         station_by_id = self.rossby.stations.by_id(station_id='KUNV')
 
-        assert station_by_id.geometry == test_against
+        assert station_by_id.geometry.coordinates == test_against.get('coordinates')
 
     def test_get_station_observations(self):
         params = {}
-        test_against = self.plain_request('stations/KUNV/observations/', params=params).get('features')[0]['id']
+        test_against = self.plain_request('stations/KUNV/observations/', params=params).get('features')[0].get('id')
 
-        content = self.rossby.stations.observations(station_id='KUNV').features[0]['id']
+        content = self.rossby.stations.observations(station_id='KUNV').features[0].get('id')
 
         assert content == test_against
 
     def test_get_latest_station_observation(self):
         params = {}
-        test_against = self.plain_request('stations/KUNV/observations/latest', params=params).get('properties')['@id']
+        test_against = self.plain_request('stations/KUNV/observations/latest', params=params).get('properties').get('@id')
 
-        content = self.rossby.stations.latest_observation(station_id='KUNV').properties['@id']
+        content = self.rossby.stations.latest_observation(station_id='KUNV').properties.id_
 
         assert content == test_against
 

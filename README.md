@@ -30,7 +30,17 @@ from rossby import Rossby
 
 rossby = Rossby()
 
+kunv = rossby.stations.by_id(station_id='KUNV')
 
-print(rossby.stations.by_id(station_id='KUNV'))
-print(rossby.alerts.get_active())
+print(kunv.geometry)
+print(kunv.geometry.coordinates)  # equivalent to kunv.geometry['coordinates']
+
+office = rossby.offices.by_id(office_id='CTP')
+
+print(office.address)
+print(office.address.streetAddress)
+print(office.responsibleCounties)
+
+# NOTE: use dir(<response>) to see the attributes on a given endpoint, i.e.:
+print(dir(office))
 ```

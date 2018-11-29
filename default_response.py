@@ -18,8 +18,7 @@ class AttrDict(dict):
         if not isinstance(data, dict):
             return data
         else:
-            return AttrDict(
-                {format_key(key): AttrDict.obj_from_nested_dict(data[key]) for key in data})
+            return AttrDict({format_key(key): AttrDict.obj_from_nested_dict(data[key]) for key in data})
 
 
 class DefaultResponse(object):
@@ -30,6 +29,5 @@ class DefaultResponse(object):
         self.config = config
         self.response = response
 
-    @property
-    def _as_json(self):
+    def json(self):
         return self.response.json()
