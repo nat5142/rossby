@@ -14,7 +14,7 @@ are currently in. There are 3 files that wrap the entire API:
 
 - `rossby.py`
 - `api_config.py`
-- `resultset.py` _(I actually don't know if this works yet)_
+- `default_response.py`
 
 That's it!!
 
