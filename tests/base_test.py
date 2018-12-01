@@ -6,7 +6,7 @@ import logging
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-class BaseTestClass(unittest.TestCase):
+class BaseTestClass(object):
     rossby = Rossby()
 
     @staticmethod

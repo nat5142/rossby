@@ -77,7 +77,7 @@ api_endpoints = {
     'zones': {
         'get': GETEndpoint('zones'),
         'by_type': GETEndpoint('zones/{type}', response=['geo+json', 'ld+json']),
-        'by_type_and_zoneId': GETEndpoint('zones/{type}/{zone_id}', response=['geo+json', 'ld+json']),
+        'by_type_and_zone_id': GETEndpoint('zones/{type}/{zone_id}', response=['geo+json', 'ld+json']),
         'zone_type_forecast': GETEndpoint('zones/{type}/{zone_id}/forecast', response=['geo+json', 'ld+json']),
         'forecast_observations': GETEndpoint('zones/forecast/{zone_id}/observations', response=['geo+json', 'ld+json']),
         'station_forecasts': GETEndpoint('zones/forecast/{zone_id}/stations', response=['geo+json', 'ld+json'])
