@@ -2,7 +2,7 @@ import requests
 from collections import namedtuple
 from string import Formatter
 from urllib.parse import urljoin
-from api_endpoint import api_endpoints
+from api_config import api_endpoints
 from default_response import DefaultResponse
 
 
@@ -39,7 +39,7 @@ class RossbyAPIMeta(type):
             url = urljoin(self.base_url, endpoint.endpoint.format(**url_params))
             for key, value in kwargs.items():
                 if type(value) in (list, tuple):
-                    kwargs['key'] = ','.join(str(v) for v in value)
+                    kwargs[key] = ','.join(str(v) for v in value)
             params = {'params' if endpoint.method == 'get' else 'data': kwargs}
             result = self.request_url(url, endpoint, **params)
             return DefaultResponse(self, endpoint, result)
