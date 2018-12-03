@@ -40,6 +40,8 @@ class RossbyAPIMeta(type):
             for key, value in kwargs.items():
                 if type(value) in (list, tuple):
                     kwargs[key] = ','.join(str(v) for v in value)
+            if endpoint.paginated and not kwargs.get('limit', None):
+                kwargs['limit'] = 10
             params = {'params' if endpoint.method == 'get' else 'data': kwargs}
             result = self.request_url(url, endpoint, **params)
             return DefaultResponse(self, endpoint, result)
