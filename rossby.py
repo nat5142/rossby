@@ -2,7 +2,7 @@ import requests
 from collections import namedtuple
 from string import Formatter
 from urllib.parse import urljoin
-from api_config import api_endpoints
+from api_endpoint import api_endpoints
 from default_response import DefaultResponse
 
 
@@ -33,19 +33,19 @@ class RossbyAPIMeta(type):
 
     @classmethod
     def get_request_methods(cls):
-        def request(self, config, **kwargs):
-            formatters = (formatter for _, formatter, _, _ in self.formatter.parse(config.endpoint) if formatter)
+        def request(self, endpoint, **kwargs):
+            formatters = (formatter for _, formatter, _, _ in self.formatter.parse(endpoint.endpoint) if formatter)
             url_params = {key: kwargs.pop(key) for key in formatters}
-            url = urljoin(self.base_url, config.endpoint.format(**url_params))
+            url = urljoin(self.base_url, endpoint.endpoint.format(**url_params))
             for key, value in kwargs.items():
                 if type(value) in (list, tuple):
                     kwargs['key'] = ','.join(str(v) for v in value)
-            params = {'params' if config.method == 'get' else 'data': kwargs}
-            result = self.request_url(url, config, **params)
-            return DefaultResponse(self, config, result)
+            params = {'params' if endpoint.method == 'get' else 'data': kwargs}
+            result = self.request_url(url, endpoint, **params)
+            return DefaultResponse(self, endpoint, result)
 
-        def request_url(self, url, config, **kwargs):
-            response = self.session.request(config.method, url, **kwargs)
+        def request_url(self, url, endpoint, **kwargs):
+            response = self.session.request(endpoint.method, url, **kwargs)
             response.raise_for_status()
             return response
 
@@ -54,10 +54,10 @@ class RossbyAPIMeta(type):
 
     @classmethod
     def generate_api_methods(cls, api, attrs):
-        make_request = lambda config: lambda **kwargs: api.request(config, **kwargs)
+        make_request = lambda endpoint: lambda **kwargs: api.request(endpoint, **kwargs)
 
         for obj_name, endpoints in api_endpoints.items():
-            methods = {endpoint_name: make_request(config) for endpoint_name, config in endpoints.items()}
+            methods = {endpoint_name: make_request(endpoint) for endpoint_name, endpoint in endpoints.items()}
             APIMethod = namedtuple('APIMethod_{}'.format(obj_name), methods.keys())
             setattr(api, obj_name, APIMethod(**methods))
 

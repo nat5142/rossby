@@ -23,10 +23,10 @@ class AttrDict(dict):
 
 class DefaultResponse(object):
 
-    def __init__(self, api, config, response):
+    def __init__(self, api, endpoint, response):
         self.__dict__ = AttrDict.obj_from_nested_dict(response.json())
         self.api = api
-        self.config = config
+        self.endpoint = endpoint
         self.response = response
 
     def json(self):
