@@ -20,7 +20,7 @@ GETPaginatedEndpoint = partial(GETEndpoint, paginated=True)
 api_endpoints = {
     'alerts': {
         'get_all': GETPaginatedEndpoint('alerts', response=['ld+json', 'atom']),
-        'active': GETEndpoint('alerts/active', response=['ld+json', 'atom']),
+        'active': GETPaginatedEndpoint('alerts/active', response=['ld+json', 'atom']),
         'by_id': GETEndpoint('alerts/{id}', response=['ld+json', 'capxml']),
         'types': GETEndpoint('alerts/types', response=['ld+json']),
         'active_count': GETEndpoint('alerts/active/count', response=['ld+json']),
@@ -32,10 +32,11 @@ api_endpoints = {
         'get': GETEndpoint('glossary/', response=['geo+json'])
     },
     'gridpoints': {
-        'wfo_xy': GETEndpoint('gridpoints/{wfo}/{x},{y}', response=['geo+json', 'ld+json']),
-        'wfo_forecast': GETEndpoint('gridpoints/{wfo}/{x},{y}/forecast', response=['geo+json', 'ld+json']),
-        'wfo_hourly': GETEndpoint('gridpoints/{wfo}/{x},{y}/forecast/hourly', response=['geo+json', 'ld+json']),
-        'wfo_stations': GETEndpoint('gridpoints/{wfo}/{x},{y}/stations', response=['geo+json', 'ld+json'])
+        'point': GETEndpoint('gridpoints/{office_id}/{lon},{lat}', response=['geo+json', 'ld+json']),
+        'forecast': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/forecast', response=['geo+json', 'ld+json']),
+        'hourly_forecast': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/forecast/hourly',
+                                       response=['geo+json', 'ld+json']),
+        'stations': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/stations', response=['geo+json', 'ld+json'])
     },
     'icons': {
         'all': GETEndpoint('icons'),
@@ -48,8 +49,10 @@ api_endpoints = {
         'get_all': GETEndpoint('stations', response=['geo+json', 'ld+json']),
         'by_id': GETEndpoint('stations/{station_id}', response=['geo+json', 'ld+json']),
         'observations': GETEndpoint('stations/{station_id}/observations', response=['geo+json', 'ld+json']),
-        'latest_observation': GETEndpoint('stations/{station_id}/observations/latest', response=['geo+json', 'ld+json']),
-        'observation_by_time': GETEndpoint('stations/{station_id}/observations/{time}', response=['geo+json', 'ld+json']),
+        'latest_observation': GETEndpoint('stations/{station_id}/observations/latest',
+                                          response=['geo+json', 'ld+json']),
+        'observation_by_time': GETEndpoint('stations/{station_id}/observations/{time}',
+                                           response=['geo+json', 'ld+json']),
         'radar': GETEndpoint('stations/radar', response=['geo+json', 'ld+json']),
         'radar_by_id': GETEndpoint('stations/radar/{station_id}', response=['geo+json', 'ld+json'])
     },
