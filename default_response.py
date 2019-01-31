@@ -13,6 +13,7 @@ class RossbyResponse(Dict):
     def __init__(self, *args, **kwargs):
         super(RossbyResponse, self).__init__(*args, **kwargs)
         self.response = kwargs.get('response', None)
+        self.latest_response = self.response
 
         for arg in args:
             if not arg:
@@ -44,17 +45,14 @@ class RossbyResponse(Dict):
 
     @property
     def next_page(self):
-        return self.response.json().get('pagination', {}).get('next', None)
+        return self.latest_response.json().get('pagination', {}).get('next', None)
 
     def paginate(self):
-        responses = []
         while self.next_page:
             _page = self.api.request_response(self.next_page, self.endpoint)
-            self.response = _page.response
-            responses.append(_page)
-
-        return responses
-
+            self.latest_response = _page.response
+            
+            yield _page
 
 
 class DefaultResponse(object):
