@@ -53,33 +53,3 @@ class RossbyResponse(Dict):
             self.latest_response = _page.response
 
             yield _page
-
-
-class DefaultResponse(object):
-
-    def __init__(self, api, endpoint, response):
-        self.api = api
-        self.endpoint = endpoint
-        self.response = response
-        self.first_response = True
-
-    def json(self):
-        return self.response.json()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.first_response:
-            self.first_response = False
-
-        if self.next_page:
-            self.response = self.api.request_response(self.next_page, self.endpoint)
-        else:
-            raise StopIteration
-
-        return self.response
-
-    @property
-    def next_page(self):
-        return self.response.json().get('pagination', {}).get('next', None)
