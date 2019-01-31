@@ -54,7 +54,6 @@ api_endpoints = {
     },
     'stations': {
         'get_all': GETEndpoint('stations', response=['geo+json', 'ld+json'], param_keys=['id', 'state', 'limit']),
-        'by_state': GETEndpoint('stations?state={state}', response=['geo+json', 'ld+json']),
         'by_id': GETEndpoint('stations/{station_id}', response=['geo+json', 'ld+json']),
         'observations': GETEndpoint('stations/{station_id}/observations', response=['geo+json', 'ld+json'],
                                     param_keys=['start', 'end', 'limit']),
