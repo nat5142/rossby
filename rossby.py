@@ -3,7 +3,7 @@ from collections import namedtuple
 from string import Formatter
 from urllib.parse import urljoin
 from api_config import api_endpoints
-from default_response import DefaultResponse
+from default_response import RossbyResponse
 
 
 class RossbyAPIMeta(type):
@@ -43,16 +43,16 @@ class RossbyAPIMeta(type):
             if endpoint.paginated and not kwargs.get('limit', None):
                 kwargs['limit'] = 10
             params = {'params' if endpoint.method == 'get' else 'data': kwargs}
-            result = self.request_url(url, endpoint, **params)
-            return DefaultResponse(self, endpoint, result)
+            return self.request_response(url, endpoint, **params)
+            # return DefaultResponse(self, endpoint, result)
 
-        def request_url(self, url, endpoint, **kwargs):
+        def request_response(self, url, endpoint, **kwargs):
             response = self.session.request(endpoint.method, url, **kwargs)
             response.raise_for_status()
-            return response
+            return RossbyResponse(response.json(), api=self, endpoint=endpoint, response=response, source_url=url)
 
         yield 'request', request
-        yield 'request_url', request_url
+        yield 'request_response', request_response
 
     @classmethod
     def generate_api_methods(cls, api, attrs):
