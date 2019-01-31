@@ -37,12 +37,15 @@ class RossbyAPIMeta(type):
             formatters = (formatter for _, formatter, _, _ in self.formatter.parse(endpoint.endpoint) if formatter)
             url_params = {key: kwargs.pop(key) for key in formatters}
             url = urljoin(self.base_url, endpoint.endpoint.format(**url_params))
+
+            query_params = {key: None for key in endpoint.param_keys}
+
             for key, value in kwargs.items():
                 if type(value) in (list, tuple):
                     kwargs[key] = ','.join(str(v) for v in value)
-            if endpoint.paginated and not kwargs.get('limit', None):
+            if endpoint.paginated and not kwargs.get('limit'):
                 kwargs['limit'] = 10
-            params = {'params' if endpoint.method == 'get' else 'data': kwargs}
+            params = {'params' if endpoint.method == 'get' else 'data': {**query_params, **kwargs}}
             return self.request_response(url, endpoint, **params)
             # return DefaultResponse(self, endpoint, result)
 

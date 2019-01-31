@@ -51,7 +51,7 @@ class RossbyResponse(Dict):
         while self.next_page:
             _page = self.api.request_response(self.next_page, self.endpoint)
             self.latest_response = _page.response
-            
+
             yield _page
 
 
