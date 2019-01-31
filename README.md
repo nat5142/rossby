@@ -1,6 +1,8 @@
 ## **Rossby**
 A wrapper for the National Weather Service API
 
+---
+
 #### Info
 
 Everything that is used to construct this wrapper is contained in
