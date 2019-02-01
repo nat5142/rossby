@@ -47,7 +47,6 @@ class RossbyAPIMeta(type):
                 kwargs['limit'] = 10
             params = {'params' if endpoint.method == 'get' else 'data': {**query_params, **kwargs}}
             return self.request_response(url, endpoint, **params)
-            # return DefaultResponse(self, endpoint, result)
 
         def request_response(self, url, endpoint, **kwargs):
             response = self.session.request(endpoint.method, url, **kwargs)
