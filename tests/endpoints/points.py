@@ -4,15 +4,33 @@ from tests.base_test import BaseTestClass
 class TestPointsEndpoint(BaseTestClass):
 
     def test_point(self):
-        test_against = 'https://api.weather.gov/points/40,-73'
         params = {}
-        latitude = 40.0
-        longitude = -73.0
-        point = self.rossby.points(lat=latitude, lon=longitude).get(params=params)
-        assert point.json().get('properties')['@id'] == test_against
+        test_against = self.plain_request('points/{point}'.format(point='40.0,-73.0'), params=params)
+
+        content = self.rossby.points.get_point(point='40.0,-73.0')
+
+        assert test_against == content.json()
 
     def test_point_stations(self):
-        test_against = 'https://api.weather.gov/stations/KISP'
         params = {}
-        point = self.rossby.points(lat=40.0, lon=-73.0).stations(params=params)
-        assert point.json().get('features')['id'] == test_against
+        test_against = self.plain_request('points/{point}/stations'.format(point='40.0,-73.0'), params=params)
+
+        content = self.rossby.points.get_stations(point='40.0,-73.0')
+
+        assert test_against == content.json()
+
+    def test_point_forecast(self):
+        params = {}
+        test_against = self.plain_request('points/{point}/forecast'.format(point='40.0,-73.0'), params=params)
+
+        content = self.rossby.points.forecast(point='40.0,-73.0')
+
+        assert test_against == content.json()
+
+    def test_point_hourly(self):
+        params = {}
+        test_against = self.plain_request('points/{point}/forecast/hourly'.format(point='40.0,-73.0'), params=params)
+
+        content = self.rossby.points.hourly_forecast(point='40.0,-73.0')
+
+        assert test_against == content.json()

@@ -1,12 +1,9 @@
 import unittest
 from rossby import Rossby
 import requests
-import logging
-
-logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-class BaseTestClass(object):
+class BaseTestClass(unittest.TestCase):
     rossby = Rossby()
 
     @staticmethod
