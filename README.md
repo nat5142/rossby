@@ -1,28 +1,30 @@
 ## **Rossby**
 A wrapper for the National Weather Service API
 
-#### Rossby Lite (metaclass backend)
+---
 
-##### Hi Chad!
+#### Info
 
-Within the main `Rossby` module, I've built a "lite" API wrapper, stripped of many
-of the features I'm hoping to add to the main version. I've basically used this as
-a vehicle to familiarize myself with `metaclasses`.
-
-Everything that is used to construct this wrapper is contained in the directory you
-are currently in. There are 3 files that wrap the entire API:
+Everything that is used to construct this wrapper is contained in
+the directory you are currently in. There are 3 files that wrap the
+entire API:
 
 - `rossby.py`
 - `api_config.py`
 - `default_response.py`
 
-That's it!!
+All of the endpoints can be found in the file `api_config.py`,
+variable `api_endpoints`. Each key in this dictionary variable
+defines the name of a base endpoint that can be called on a
+`Rossby()` object. Subsequent key-value pairs represent the unique
+methods that can be called on the base endpoint.
 
-All of the endpoints can be found in the file `api_config.py`, variable `api_endpoints`.
 
 ----------------------------------
 
-##### Try this, from the top-level directory:
+##### Getting Started
+
+Try this example to see how Rossby works:
 
 ```python
 from rossby import Rossby

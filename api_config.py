@@ -11,17 +11,23 @@ response_types = {
     'atom': 'application/atom+xml'
 }
 
-APIEndpoint = namedtuple('APIEndpoint', 'endpoint method paginated response')
-DefaultAPIEndpoint = partial(APIEndpoint, paginated=False, response=['geo+json'])
+APIEndpoint = namedtuple('APIEndpoint', 'endpoint method paginated response param_keys')
+DefaultAPIEndpoint = partial(APIEndpoint, paginated=False, response=['geo+json'], param_keys=[])
 GETEndpoint = partial(DefaultAPIEndpoint, method='get')
 GETPaginatedEndpoint = partial(GETEndpoint, paginated=True)
 
 
 api_endpoints = {
     'alerts': {
-        'get_all': GETPaginatedEndpoint('alerts', response=['ld+json', 'atom']),
-        'active': GETEndpoint('alerts/active', response=['ld+json', 'atom']),
-        'by_id': GETEndpoint('alerts/{id}', response=['ld+json', 'capxml']),
+        'get_all': GETPaginatedEndpoint('alerts', response=['ld+json', 'atom'],
+                                        param_keys=['active', 'start', 'end', 'status', 'message_type', 'event',
+                                                    'code', 'region_type', 'point', 'region', 'area', 'zone', 'urgency',
+                                                    'severity', 'certainty', 'limit']),
+        'active': GETPaginatedEndpoint('alerts/active', response=['ld+json', 'atom'],
+                                       param_keys=['status', 'message_type', 'event',
+                                                   'code', 'region_type', 'point', 'region', 'area', 'zone', 'urgency',
+                                                   'severity', 'certainty', 'limit']),
+        'by_id': GETEndpoint('alerts/{id}', response=['geo+json', 'ld+json', 'capxml']),
         'types': GETEndpoint('alerts/types', response=['ld+json']),
         'active_count': GETEndpoint('alerts/active/count', response=['ld+json']),
         'active_by_zone': GETEndpoint('alerts/active/zone/{zone_id}', response=['ld+json', 'atom']),
@@ -32,24 +38,29 @@ api_endpoints = {
         'get': GETEndpoint('glossary/', response=['geo+json'])
     },
     'gridpoints': {
-        'wfo_xy': GETEndpoint('gridpoints/{wfo}/{x},{y}', response=['geo+json', 'ld+json']),
-        'wfo_forecast': GETEndpoint('gridpoints/{wfo}/{x},{y}/forecast', response=['geo+json', 'ld+json']),
-        'wfo_hourly': GETEndpoint('gridpoints/{wfo}/{x},{y}/forecast/hourly', response=['geo+json', 'ld+json']),
-        'wfo_stations': GETEndpoint('gridpoints/{wfo}/{x},{y}/stations', response=['geo+json', 'ld+json'])
+        'point': GETEndpoint('gridpoints/{office_id}/{lon},{lat}', response=['geo+json', 'ld+json']),
+        'forecast': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/forecast', response=['geo+json', 'ld+json'],
+                                param_keys=['units']),
+        'hourly_forecast': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/forecast/hourly',
+                                       response=['geo+json', 'ld+json'], param_keys=['units']),
+        'stations': GETEndpoint('gridpoints/{office_id}/{lon},{lat}/stations', response=['geo+json', 'ld+json'])
     },
     'icons': {
         'all': GETEndpoint('icons'),
-        'get_icon': GETEndpoint('icons/{set}/{time_of_day}/{first}/{second}')
+        'get_icon': GETEndpoint('icons/{set}/{time_of_day}/{first}/{second}', param_keys=['size', 'fontsize'])
     },
     'thumbnails': {
         'get_by_area': GETEndpoint('thumbnails/satellite/{area}')
     },
     'stations': {
-        'get_all': GETEndpoint('stations', response=['geo+json', 'ld+json']),
+        'get_all': GETEndpoint('stations', response=['geo+json', 'ld+json'], param_keys=['id', 'state', 'limit']),
         'by_id': GETEndpoint('stations/{station_id}', response=['geo+json', 'ld+json']),
-        'observations': GETEndpoint('stations/{station_id}/observations', response=['geo+json', 'ld+json']),
-        'latest_observation': GETEndpoint('stations/{station_id}/observations/latest', response=['geo+json', 'ld+json']),
-        'observation_by_time': GETEndpoint('stations/{station_id}/observations/{time}', response=['geo+json', 'ld+json']),
+        'observations': GETEndpoint('stations/{station_id}/observations', response=['geo+json', 'ld+json'],
+                                    param_keys=['start', 'end', 'limit']),
+        'latest_observation': GETEndpoint('stations/{station_id}/observations/latest',
+                                          response=['geo+json', 'ld+json'], param_keys=['require_qc']),
+        'observation_by_time': GETEndpoint('stations/{station_id}/observations/{time}',
+                                           response=['geo+json', 'ld+json']),
         'radar': GETEndpoint('stations/radar', response=['geo+json', 'ld+json']),
         'radar_by_id': GETEndpoint('stations/radar/{station_id}', response=['geo+json', 'ld+json'])
     },
@@ -65,7 +76,8 @@ api_endpoints = {
         'hourly_forecast': GETEndpoint('points/{point}/forecast/hourly', response=['geo+json', 'ld+json']),
     },
     'products': {
-        'get': GETEndpoint('products', response=['ld+json']),
+        'get': GETEndpoint('products', response=['ld+json'],
+                           param_keys=['location', 'start', 'end', 'office', 'wmoid', 'type', 'limit']),
         'locations': GETEndpoint('products/locations', response=['ld+json']),
         'types': GETEndpoint('products/types', response=['ld+json']),
         'by_id': GETEndpoint('products/{product_id}', response=['ld+json']),
@@ -75,11 +87,14 @@ api_endpoints = {
         'by_type_and_location': GETEndpoint('products/types/{type_id}/locations/{location_id}', response=['ld+json'])
     },
     'zones': {
-        'get': GETEndpoint('zones'),
-        'by_type': GETEndpoint('zones/{type}', response=['geo+json', 'ld+json']),
-        'by_type_and_zone_id': GETEndpoint('zones/{type}/{zone_id}', response=['geo+json', 'ld+json']),
+        'get': GETEndpoint('zones', param_keys=['id', 'area', 'region', 'type', 'point', 'include_geometry', 'effective']),
+        'by_type': GETEndpoint('zones/{type}', response=['geo+json', 'ld+json'],
+                               param_keys=['id', 'area', 'region', 'type', 'point', 'include_geometry', 'effective']),
+        'by_type_and_zone_id': GETEndpoint('zones/{type}/{zone_id}', response=['geo+json', 'ld+json'],
+                                           param_keys=['effective']),
         'zone_type_forecast': GETEndpoint('zones/{type}/{zone_id}/forecast', response=['geo+json', 'ld+json']),
-        'forecast_observations': GETEndpoint('zones/forecast/{zone_id}/observations', response=['geo+json', 'ld+json']),
+        'forecast_observations': GETEndpoint('zones/forecast/{zone_id}/observations', response=['geo+json', 'ld+json'],
+                                             param_keys=['start', 'end', 'limit']),
         'station_forecasts': GETEndpoint('zones/forecast/{zone_id}/stations', response=['geo+json', 'ld+json'])
     }
 }

@@ -1,5 +1,6 @@
 import builtins
 import itertools
+from addict import Dict
 
 
 def format_key(key):
@@ -7,27 +8,48 @@ def format_key(key):
     return '{}_'.format(strip) if strip in itertools.chain(dir(builtins)) else strip
 
 
-class AttrDict(dict):
+class RossbyResponse(Dict):
 
     def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
+        super(RossbyResponse, self).__init__(*args, **kwargs)
+        self.response = kwargs.get('response', None)
+        self.latest_response = self.response
 
-    @staticmethod
-    def obj_from_nested_dict(data):
-        if not isinstance(data, dict):
-            return data
-        else:
-            return AttrDict({format_key(key): AttrDict.obj_from_nested_dict(data[key]) for key in data})
+        for arg in args:
+            if not arg:
+                continue
+            elif isinstance(arg, dict):
+                for key, val in arg.items():
+                    object.__setattr__(self, format_key(key), self._hook(val))
+            elif isinstance(arg, tuple) and (not isinstance(arg[0], tuple)):
+                pass
+            else:
+                for key, val in iter(arg):
+                    object.__setattr__(self, format_key(key), self._hook(val))
 
+        for key, val in kwargs.items():
+            object.__setattr__(self, key, val)
 
-class DefaultResponse(object):
+    @classmethod
+    def _hook(cls, item):
+        if isinstance(item, dict):
+            return cls(item)
+        elif isinstance(item, list):
+            return type(item)(cls._hook(elem) for elem in item)
 
-    def __init__(self, api, endpoint, response):
-        self.__dict__ = AttrDict.obj_from_nested_dict(response.json())
-        self.api = api
-        self.endpoint = endpoint
-        self.response = response
+        return item
 
+    @property
     def json(self):
         return self.response.json()
+
+    @property
+    def next_page(self):
+        return self.latest_response.json().get('pagination', {}).get('next', None)
+
+    def paginate(self):
+        while self.next_page:
+            _page = self.api.request_response(self.next_page, self.endpoint)
+            self.latest_response = _page.response
+
+            yield _page
