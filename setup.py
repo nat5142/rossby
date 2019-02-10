@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     url='',
     python_requires='-=3.7',
-    install_requires=['requests>=2.20'],
+    setup_requires=['requests>=2.20'],
     keywords='national weather service nws noaa api wrapper',
     classifiers=[
         'Programming Language :: Python :: 3',
