@@ -5,10 +5,14 @@ import requests
 
 class BaseTestClass(unittest.TestCase):
     rossby = Rossby()
+    session = requests.Session()
 
-    @staticmethod
-    def plain_request(endpoint, params):
-        session = requests.Session()
-        resp = session.get(f"https://api.weather.gov/{endpoint}", params=params)
+    def plain_request(self, endpoint, params):
+        resp = self.session.get(f"https://api.weather.gov/{endpoint}", params=params)
 
         return resp.json()
+
+    def icon_request(self, endpoint, params):
+        resp = self.session.get(f"https://api.weather.gov/{endpoint}", params=params)
+
+        return resp

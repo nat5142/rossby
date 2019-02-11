@@ -1,5 +1,6 @@
 from collections import namedtuple
 from functools import partial
+from default_response import RossbyResponse
 
 
 response_types = {
@@ -11,10 +12,12 @@ response_types = {
     'atom': 'application/atom+xml'
 }
 
-APIEndpoint = namedtuple('APIEndpoint', 'endpoint method paginated response param_keys')
-DefaultAPIEndpoint = partial(APIEndpoint, paginated=False, response=['geo+json'], param_keys=[])
+APIEndpoint = namedtuple('APIEndpoint', 'endpoint method paginated response param_keys response_type')
+DefaultAPIEndpoint = partial(APIEndpoint, paginated=False, response=['geo+json'], param_keys=[],
+                             response_type=RossbyResponse)
 GETEndpoint = partial(DefaultAPIEndpoint, method='get')
 GETPaginatedEndpoint = partial(GETEndpoint, paginated=True)
+GETIconEndpoint = partial(GETEndpoint, response_type=None)
 
 
 api_endpoints = {
@@ -47,7 +50,9 @@ api_endpoints = {
     },
     'icons': {
         'all': GETEndpoint('icons'),
-        'get_icon': GETEndpoint('icons/{set}/{time_of_day}/{first}/{second}', param_keys=['size', 'fontsize'])
+        'static_icon': GETIconEndpoint('icons/{set}/{time}/{condition}', param_keys=['size', 'fontsize']),
+        'transition_icon': GETIconEndpoint('icons/{set}/{time}/{first_condition}/{second_condition}',
+                                           param_keys=['size', 'fontsize'])
     },
     'thumbnails': {
         'get_by_area': GETEndpoint('thumbnails/satellite/{area}')

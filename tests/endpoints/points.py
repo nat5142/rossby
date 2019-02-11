@@ -9,7 +9,7 @@ class TestPointsEndpoint(BaseTestClass):
 
         content = self.rossby.points.get_point(point='40.0,-73.0')
 
-        assert test_against == content.json()
+        self.assertDictEqual(test_against, content.json)
 
     def test_point_stations(self):
         params = {}
@@ -17,7 +17,7 @@ class TestPointsEndpoint(BaseTestClass):
 
         content = self.rossby.points.get_stations(point='40.0,-73.0')
 
-        assert test_against == content.json()
+        self.assertDictEqual(test_against, content.json)
 
     def test_point_forecast(self):
         params = {}
@@ -25,7 +25,7 @@ class TestPointsEndpoint(BaseTestClass):
 
         content = self.rossby.points.forecast(point='40.0,-73.0')
 
-        assert test_against == content.json()
+        self.assertDictEqual(test_against, content.json)
 
     def test_point_hourly(self):
         params = {}
@@ -33,4 +33,4 @@ class TestPointsEndpoint(BaseTestClass):
 
         content = self.rossby.points.hourly_forecast(point='40.0,-73.0')
 
-        assert test_against == content.json()
+        self.assertDictEqual(test_against, content.json)

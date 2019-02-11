@@ -23,7 +23,9 @@ class SpecialCaseTestClass(BaseTestClass):
         self.assertDictEqual(data.response.json(), test_against)
 
     def test_pagination(self):
-        self.assertIsNotNone(self.data.paginate())
+        test_against = [x for x in self.data.paginate()]
+        self.assertIsNotNone(test_against)
+        self.assertIs(type(test_against), list)
 
     def test_early_stop_pagination(self):
         data = self.rossby.alerts.get_all()
@@ -31,9 +33,9 @@ class SpecialCaseTestClass(BaseTestClass):
         test_against = []
 
         for index, item in enumerate(data.paginate()):
-            if index == 3:
+            if index == 2:
                 break
 
             test_against.append(item)
 
-        self.assertIs(len(test_against), 3)
+        self.assertIs(len(test_against), 2)

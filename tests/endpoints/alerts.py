@@ -4,13 +4,13 @@ from tests.base_test import BaseTestClass
 class TestAlertsEndpoint(BaseTestClass):
 
     def test_base_alerts_endpoint(self):
-        params = {}
+        params = {'limit': 10}
         test_against = self.plain_request('alerts', params=params)
 
         content = self.rossby.alerts.get_all()
 
-        assert test_against == content.json()
-        assert test_against.get('features') == content.features
+        # self.assertDictEqual(test_against, content.response.json())
+        self.assertEqual(len(test_against.get('features')), len(content.features))
 
     def test_active_alerts(self):
         params = {}
@@ -18,7 +18,7 @@ class TestAlertsEndpoint(BaseTestClass):
 
         content = self.rossby.alerts.active()
 
-        assert test_against == content.json()
+        self.assertEqual(test_against.keys(), content.response.json().keys())
 
     def test_get_alerts_active_count(self):
         params = {}
@@ -26,7 +26,7 @@ class TestAlertsEndpoint(BaseTestClass):
 
         content = self.rossby.alerts.active_count()
 
-        assert test_against == content.json()
+        self.assertEqual(test_against.keys(), content.response.json().keys())
 
     def test_get_alerts_by_id(self):
         params = {}
@@ -37,4 +37,4 @@ class TestAlertsEndpoint(BaseTestClass):
 
         content = self.rossby.alerts.by_id(id=test_id)
 
-        assert test_against == content.json()
+        self.assertEqual(test_against.keys(), content.response.json().keys())

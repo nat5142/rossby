@@ -1,5 +1,4 @@
 from tests.base_test import BaseTestClass
-from requests.exceptions import HTTPError
 
 
 class TestStationsEndpoint(BaseTestClass):
@@ -38,13 +37,12 @@ class TestStationsEndpoint(BaseTestClass):
         assert content == test_against
 
     def test_get_radar(self):
+        # TODO: Check to see if this endpoint is active again. Then, add rossby.radar.by_id() test
         params = {}
-        try:
-            test_against = self.plain_request('stations/radar', params=params)
-            content = self.rossby.stations.radar().json()
-        except HTTPError as err:
-            if err.response.status_code != '500':
-                raise err
+        test_against = self.plain_request('stations/radar', params=params)
 
-        assert content == test_against
-
+        if test_against.get('status', '') and test_against.get('status') == 500:
+            pass
+        else:
+            content = self.rossby.stations.radar()
+            self.assertDictEqual(test_against, content.json)
