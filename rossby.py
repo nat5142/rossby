@@ -29,7 +29,8 @@ class RossbyAPIMeta(type):
 
     @classmethod
     def get_init_method(cls):
-        def __init__(self, response_type='application/geo+json'):
+        def __init__(self, response_type='*/*'):
+            # TODO: Need to investigate the behavior of this param...
             self.session.headers['Accept'] = response_type
 
         return __init__
