@@ -8,7 +8,7 @@ from default_response import RossbyResponse
 
 class RossbyAPIMeta(type):
 
-    def __new__(cls, name, bases, attrs):
+    def __new__(mcs, name, bases, attrs):
 
         if 'base_url' not in attrs:
             attrs['base_url'] = 'https://api.weather.gov/'
@@ -18,17 +18,17 @@ class RossbyAPIMeta(type):
         attrs['formatter'] = Formatter()
 
         for attr, method in RossbyAPIMeta.get_request_methods():
-            setattr(cls, attr, method)
+            setattr(mcs, attr, method)
 
-        return super(RossbyAPIMeta, cls).__new__(cls, name, bases, attrs)
+        return super(RossbyAPIMeta, mcs).__new__(mcs, name, bases, attrs)
 
-    def __init__(self, name, bases, attrs):
-        super(RossbyAPIMeta, self).__init__(name, bases, attrs)
+    def __init__(cls, name, bases, attrs):
+        super(RossbyAPIMeta, cls).__init__(name, bases, attrs)
 
-        RossbyAPIMeta.generate_api_methods(self, attrs)
+        RossbyAPIMeta.generate_api_methods(cls, attrs)
 
     @classmethod
-    def get_init_method(cls):
+    def get_init_method(mcs):
         def __init__(self, response_type='*/*'):
             # TODO: Need to investigate the behavior of this param...
             self.session.headers['Accept'] = response_type
@@ -36,7 +36,7 @@ class RossbyAPIMeta(type):
         return __init__
 
     @classmethod
-    def get_request_methods(cls):
+    def get_request_methods(mcs):
         def request(self, endpoint, **kwargs):
 
             formatters = (formatter for _, formatter, _, _ in self.formatter.parse(endpoint.endpoint) if formatter)
@@ -70,7 +70,7 @@ class RossbyAPIMeta(type):
         yield 'request_response', request_response
 
     @classmethod
-    def generate_api_methods(cls, api, attrs):
+    def generate_api_methods(mcs, api, attrs):
         make_request = lambda endpoint: lambda **kwargs: api.request(endpoint, **kwargs)
 
         for obj_name, endpoints in api_endpoints.items():

@@ -42,7 +42,7 @@ class TestStationsEndpoint(BaseTestClass):
         test_against = self.plain_request('stations/radar', params=params)
 
         if test_against.get('status', '') and test_against.get('status') == 500:
-            pass
+            print(f'500 error encountered in {self.__class__.__name__}')
         else:
             content = self.rossby.stations.radar()
             self.assertDictEqual(test_against, content.json)

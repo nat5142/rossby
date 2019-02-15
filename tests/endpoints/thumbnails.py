@@ -9,7 +9,7 @@ class TestThumbnailsEndpoint(BaseTestClass):
 
         if test_against.get('status') == 500:
             # TODO: Log/output 500 error
-            pass
+            print(f'500 error encountered in {self.__class__.__name__}')
         else:
             content = self.rossby.thumbnails.get_by_area(area='PA')
             self.assertDictEqual(test_against, content.json)
