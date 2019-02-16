@@ -9,4 +9,4 @@ class TestGlossaryEndpoint(BaseTestClass):
 
         content = self.rossby.glossary.get()
 
-        assert test_against == content.json()
+        self.assertDictEqual(test_against, content.json)
