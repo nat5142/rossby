@@ -5,7 +5,7 @@ with open('README.md', 'r') as readme:
 
 setuptools.setup(
     name='rossby',
-    version='0.1',
+    version='0.0.1',
     author='Nicholas Tulli',
     author_email='nat5142@psu.edu',
     description='A wrapper for the U.S. National Weather Service API',
@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     url='https://github.com/nat5142/rossby',
     python_requires='-=3.6',
+    packages=setuptools.find_packages(exclude='tests'),
     setup_requires=['requests>=2.20'],
     keywords='national weather service nws noaa api wrapper',
     classifiers=[

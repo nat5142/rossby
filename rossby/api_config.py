@@ -1,6 +1,6 @@
 from collections import namedtuple
 from functools import partial
-from default_response import RossbyResponse
+from rossby.default_response import RossbyResponse
 
 
 response_types = {
