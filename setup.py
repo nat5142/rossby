@@ -5,7 +5,7 @@ with open('README.md', 'r') as readme:
 
 setuptools.setup(
     name='rossby',
-    version='0.0.1',
+    version='0.0.2',
     author='Nicholas Tulli',
     author_email='nat5142@psu.edu',
     description='A wrapper for the U.S. National Weather Service API',
