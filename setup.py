@@ -14,7 +14,7 @@ setuptools.setup(
     url='https://github.com/nat5142/rossby',
     python_requires='>=3.6',
     packages=setuptools.find_packages(exclude='tests'),
-    setup_requires=['requests>=2.20', 'addict==2.2.0'],
+    install_requires=['requests>=2.20', 'addict==2.2.0'],
     keywords='national weather service nws noaa api wrapper',
     classifiers=[
         'Programming Language :: Python :: 3',
