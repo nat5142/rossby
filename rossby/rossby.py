@@ -25,7 +25,7 @@ class RossbyAPIMeta(type):
     def __init__(cls, name, bases, attrs):
         super(RossbyAPIMeta, cls).__init__(name, bases, attrs)
 
-        RossbyAPIMeta.generate_api_methods(cls, attrs)
+        RossbyAPIMeta.generate_api_methods(cls)
 
     @classmethod
     def get_init_method(mcs):
@@ -70,7 +70,7 @@ class RossbyAPIMeta(type):
         yield 'request_response', request_response
 
     @classmethod
-    def generate_api_methods(mcs, api, attrs):
+    def generate_api_methods(mcs, api):
         make_request = lambda endpoint: lambda **kwargs: api.request(endpoint, **kwargs)
 
         for obj_name, endpoints in api_endpoints.items():

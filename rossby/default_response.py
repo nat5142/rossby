@@ -12,8 +12,10 @@ class RossbyResponse(Dict):
 
     def __init__(self, *args, **kwargs):
         super(RossbyResponse, self).__init__(*args, **kwargs)
-        self.response = kwargs.get('response', None)
-        self.latest_response = self.response
+
+        if kwargs.get('response'):
+            self.response = kwargs.get('response')
+            self.latest_response = self.response
 
         for arg in args:
             if not arg:
